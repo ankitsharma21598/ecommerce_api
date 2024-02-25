@@ -2,9 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const apiRoutes = require('./src/routes/apiRoutes');
 const db = require('./src/models/database');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Allow requests from all origins
+app.use(cors());
 
 // Connect to the database
 db.connect()
