@@ -99,14 +99,14 @@ exports.viewCart = (req, res) => {
 
 exports.updateCart = (req, res) => {
     const userId = req.userId; // Assuming userId is obtained from authentication middleware
-    const { productId, quantity } = req.body;
+    const { quantity } = req.body;
     
     // Check if userId, productId, and quantity are provided and valid
-    if (!userId || isNaN(userId) || !productId || isNaN(productId) || !quantity || isNaN(quantity)) {
+    if (!userId || isNaN(userId) || !quantity || isNaN(quantity)) {
         return res.status(400).json({ error: 'Invalid input data' });
     }
 
-    db.query('UPDATE cart SET quantity = $1 WHERE user_id = $2 AND product_id = $3', [quantity, userId, productId])
+    db.query('UPDATE cart SET quantity = $1 WHERE user_id = $2', [quantity, userId])
         .then(result => {
             if (result.rowCount === 0) {
                 res.status(404).json({ error: 'Cart item not found' });
